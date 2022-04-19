@@ -1,43 +1,141 @@
 let novaTarefa = document.getElementById("novaTarea");
 let botaoNovaTarefa = document.getElementById("botaoNovaTarefa")
 
-botaoNovaTarefa.addEventListener('click', function(event){
-
-    event.preventDefault();
-
-    let criandoTarefas = {
-         "description": novaTarefa.value,
+let criandoTarefas = {
+         "description": "",
          "completed": false
          
     };
 
-    fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks`, {
+let urlCriarTarefa = `https://ctd-todo-api.herokuapp.com/v1/tasks`;    
 
-        method: 'POST',
-        headers: “Authorization” : {
-            
-            "Content-type" : 'application/json'
-        
-        }
+botaoNovaTarefa.addEventListener('click', function(event){ 
 
-        body: JSON.stringify(criandoTarefas)
+    event.preventDefault();
 
-    })
 
-    .then(response => response.json())   
 
-console.log(criandoTarefas);
+
 
 })
 
-onload = function(){
-    let tokenJwt = this.sessionStorage.getItem("jwt");
 
-        if (!tokenJwt) {
-            //alert("Você não tem permissão para acessar essa pagina...")
-            location.href = "index.html"
-        } else {
-            console.log(tokenJwt);
-        }
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // let criandoTarefas = {
+    //      "description": "",
+    //      "completed": false
+         
+    // };
+
+//            let getLogin = {
+//             method: 'GET',
+//             headers: {
+//                 'content-type': 'application/json'
+//             },
+
+//         }
+
+//         let urlCriarTarefa = `https://ctd-todo-api.herokuapp.com/v1/tasks`;
+
+//         fetch(urlCriarTarefa, getLogin)
+
+//         .then(response => {
+//             console.log(response);
+//             if(response.status == 201){
+//                 return response.json()
+//             }
+//             throw response;
+            
+//         })
+//         .then(data => {
+//             loginEfetuado(data.jwt)
+//             console.log(data)
+
+//         })
+        
+//         .catch(error => {
+//             loginErro(error.status)
+//             alert ("Erro, tente novamente")
+
+//         });
+        
+        
+//     } else {
+//         evento.preventDefault();
+        
+//     }
+    
+    
+//         function loginEfetuado (jwtRecebido){
+//         console.log("Json Recebido");
+//         console.log(jwtRecebido);
+//         sessionStorage.setItem('jwt', jwtRecebido)
+//         window.location.href = 'tarefas.html'
+    
+//         }
+
+
+
+//     let usuarioObjetoJson = JSON.stringify(usuarioObjeto);
+
+        
+//         let postLogin = {
+//             method: 'POST',
+//             headers: {
+//                 'content-type': 'application/json'
+//             },
+//             body: usuarioObjetoJson
+//         }
+        
+//         let urlLogin = `https://ctd-todo-api.herokuapp.com/v1/users/login`;
+        
+//         fetch(urlLogin, postLogin) 
+//         .then(response => {
+//             console.log(response);
+//             if(response.status == 201){
+//                 return response.json()
+//             }
+//             throw response;
+            
+//         })
+//         .then(data => {
+//             loginEfetuado(data.jwt)
+//             console.log(data)
+
+//         })
+        
+//         .catch(error => {
+//             loginErro(error.status)
+//             alert ("Erro, tente novamente")
+
+//         });
+        
+        
+//     } else {
+//         evento.preventDefault();
+        
+//     }
+    
+    
+//         function loginEfetuado (jwtRecebido){
+//         console.log("Json Recebido");
+//         console.log(jwtRecebido);
+//         sessionStorage.setItem('jwt', jwtRecebido)
+//         window.location.href = 'tarefas.html'
+    
+//         }
+//

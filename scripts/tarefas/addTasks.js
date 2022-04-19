@@ -4,7 +4,7 @@ let tokenJwt = sessionStorage.getItem('jwt')
 // Novo Código
 
 // CADASTRANDO UMA NOVA TAREFA PARA O USUARIO LOGADO
-let btAddTask = document.getElementById('btAddTask')
+let btAddTask = document.getElementById('botaoNovaTarefa')
 let btPendente = document.getElementById('radio-1')
 let btConcluido = document.getElementById('radio-2')
 
@@ -15,7 +15,7 @@ btAddTask.addEventListener('click', evento => {
 
     evento.preventDefault();
 
-    let descricaoTarefa = document.getElementById('novaTarefa');
+    let descricaoTarefa = document.getElementById('novaTarea');
     let radioGrupo = document.getElementsByName('radio-group');
     let radioSelecionado;
     if (descricaoTarefa.value != "") {
@@ -29,9 +29,12 @@ btAddTask.addEventListener('click', evento => {
 
       //Cria um objeto JS que sera convertido para JSON
       const objetoTarefa = {
-        description: descricaoTarefa.value,
+        description: " ",
         completed: radioSelecionado
       }
+
+
+      
 
       let objetoTarefaJson = JSON.stringify(objetoTarefa);
     
@@ -51,7 +54,7 @@ btAddTask.addEventListener('click', evento => {
           if (resultado.status == 201) {
             return resultado.json()
           }
-          throw resultado.status
+          throw resultado
         })
         .then(resultado => {
           if(resultado.completed) {
@@ -70,3 +73,10 @@ btAddTask.addEventListener('click', evento => {
       alert("É necessário informar uma descrição antes de enviar a atividade!")
     }
 });
+
+  function criarTarefa (jwtRecebido){
+    console.log("Json Recebido");
+    console.log(jwtRecebido);
+    sessionStorage.setItem('jwt', jwtRecebido)
+    window.location.href = 'tarefas.html'
+  }

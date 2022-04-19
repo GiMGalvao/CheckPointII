@@ -14,13 +14,14 @@ botaoSalvar.innerText = "Bloqueado"
 
 const usuarioObjeto = {
     email: "",
-    senha: ""
+    password: ""
 }
 
+validaTelaDeLogin()
 
 botaoSalvar.addEventListener('click', function (evento) {
 
-   
+   evento.preventDefault()
     if (validaTelaDeLogin()) {
     
         campoEmailLoginNormalizado = retiraEspacosDeUmValorInformado(campoEmailLogin.value);
@@ -30,16 +31,60 @@ botaoSalvar.addEventListener('click', function (evento) {
 
      
         usuarioObjeto.email = campoEmailLoginNormalizado;
-        usuarioObjeto.senha = campoSenhaLoginNormalizado;
+        usuarioObjeto.password = campoSenhaLoginNormalizado;
 
-        console.log(usuarioObjeto);
+        let usuarioObjetoJson = JSON.stringify(usuarioObjeto);
 
+        
+        let postLogin = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: usuarioObjetoJson
+        }
+        
+        let urlLogin = `https://ctd-todo-api.herokuapp.com/v1/users/login`;
+        
+        fetch(urlLogin, postLogin) 
+        .then(response => {
+            console.log(response);
+            if(response.status == 201){
+                return response.json()
+            }
+            throw response;
+            
+        })
+        .then(data => {
+            loginEfetuado(data.jwt)
+            console.log(data)
+
+        })
+        
+        .catch(error => {
+            loginErro(error.status)
+            alert ("Erro, tente novamente")
+
+        });
+        
+        
     } else {
         evento.preventDefault();
         
     }
-
+    
+    
+        function loginEfetuado (jwtRecebido){
+        console.log("Json Recebido");
+        console.log(jwtRecebido);
+        sessionStorage.setItem('jwt', jwtRecebido)
+        window.location.href = 'tarefas.html'
+    
+        }
 });
+
+
+   
 
 
 campoEmailLogin.addEventListener('blur', function () {
@@ -93,54 +138,10 @@ campoSenhaLogin.addEventListener('blur', function () {
         senhaValidacao.style.fontWeight = "bold"
         campoSenhaLogin.style.border = `1px solid #E01E1E`
         senhaEValido = false;
+    
     }
-    validaTelaDeLogin();
 
-    let usuarioObjetoJson = JSON.stringify(usuarioObjeto);
+})
 
-    let endPoint = {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: usuarioObjetoJson
-    }
-    
-    let urlEndPoint = "https://ctd-todo-api.herokuapp.com/v1/users/login"
-    
-    fetch(urlEndPoint, endPoint)
-    .then(response => {
-        if(response.status == 201){
-            return response.json()
-        }else{
-            throw response.status
-        }
-    })
-    .then(data => data.jwt)
-    .then(data => {
-        loginOk(data)
-        
-    })
-    
-    .catch(error => {
-        if(error == 404 || error == 400){
-            exibeErro.innerText = "Usuário ou senha incorreto."
-            exibirErroApi(exibeErro)
-        }else{
-            exibeErro.innerText = "Tente novamente mais tarde."
-            exibirErroApi(exibeErro)
-        }
 
-        function loginSucesso(jwtRecebido){
-            document.cookie = `jwt=${jwtRecebido}`;
-        
-            alert("sucesso,você será logado no sistema.");
-        
-            window.location.href = "tarefas.html"
-        }
-        
     
-    })
-    
- 
-}
