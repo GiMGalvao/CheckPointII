@@ -42,8 +42,12 @@
 
 
   <form class="nova-tarefa">
-    <div class="radio-group "></div>
-    <input id="novaTarea" type="text" placeholder="Nova tarefa">
+    <div class="radio-group "> <input type="radio" name="drone" id="radio-1" >
+      <label>Pendente</label> 
+      <input type="radio" name="drone" id="radio-2" >
+      <label >Concluída</label>
+    </div>
+    <input id="novaTarefa" type="text" placeholder="Nova tarefa">
     <button type="submit" id="botaoNovaTarefa" >
       <img src="./assets/plus.png" alt="Adicionar uma nova tarefa">
     </button>
@@ -82,11 +86,12 @@
 
   </ul>
 
-  <script src="scripts/tarefas/addTasks.js"></script>
-<script src="scripts/validacoes/utils.js"></script> 
+  <script src="scripts/validacoes/utils.js"></script> 
+<script src="scripts/tarefas/teste.js"></script>
+
 
 <!-- <script src="scripts/tarefas/tarefas.js"></script> -->
-
+  <!-- <script src="scripts/tarefas/addTasks.js"></script> -->
 </body>
 
 </html>
